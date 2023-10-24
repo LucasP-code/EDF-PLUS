@@ -12,7 +12,7 @@ const getAll = async() => {
 const createAluno = async(Aluno) => {
 
     const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = Aluno;
-    const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha,  Sexo, Estado_civil, Modalidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
 
     const [createdAluno] = await connection.execute(query, [Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha,  Sexo, Estado_civil, Modalidade]);
     return createdAluno;
