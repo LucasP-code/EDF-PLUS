@@ -6,19 +6,20 @@
 
 DROP TABLE Facilitador_turma;
 
+DROP TABLE Alunos;
 
 use EDF;
 
 
 -- inserir aluno
-INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Sexo, Estado_civil, Modalidade)
-VALUES('Felipe Cavalcante', 'Felipe', '42828831255', 1499551234, 'felipemainyasuo@gmail.com', 'M', 'solteiro', 'online');
+INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
+VALUES('Felipe Cavalcante', 'Felipe', '42828831255', 1499551234, 'felipemainyasuo@gmail.com', 'senhalegal', 'M', 'solteiro', 'online');
 
 -- inseri facilitador
 INSERT INTO Facilitador(Nome, Nome_preferencia, Data_de_nascimento, 
 Estado_civil, CPF, Cel_whatsapp, CEP, endereço, numero, 
 Email, Email_EDF, Ocupacao, UF, Cidade, Nomes_filhos, Idade_filhos)
-VALUES('Paula Maria Rosse', 'Paula', '1995-01-07', 'casada', 25737818834, 14991461215, 17123345
+VALUES('Paula Maria Rosse', 'Paula', '1995-01-07', 'casada', 2573781884, 14991461215, 17123345
 , 'rua dias', 1234, 'paulacavalcante123@gmail.com', 'paula.cavalcanteEDF@edf.com', 'facilitadora', 'SP', 'Pompeia', 'Felipe Cavalcante', 12);
 
 select * from Facilitador;
@@ -31,6 +32,7 @@ Nome_preferencia varchar(30),
 CPF BIGINT,
 Cel_whatsapp INT,
 Email varchar(90),
+Senha varchar(30),
 Sexo char(1),
 Estado_civil varchar(20),
 Modalidade varchar(20)
