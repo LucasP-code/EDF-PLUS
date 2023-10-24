@@ -23,5 +23,4 @@ const createAluno = async(Aluno) => {
 module.exports = {
     getAll,
     createAluno,
-
 };
