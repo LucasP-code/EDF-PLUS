@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
-const router = require('./Routers/router');
+const routerAluno = require('./Routers/routerAluno');
+const routerEscola = require('./Routers/routerEscola');
 
-app.use(router);
+app.use(express.json());
+
+app.use(routerAluno);
+app.use(routerEscola);
+
 
 module.exports = app;
