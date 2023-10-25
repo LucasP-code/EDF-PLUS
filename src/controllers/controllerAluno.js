@@ -9,9 +9,13 @@ const getAll = async(req,res) => {
 
 const createAluno = async(req, res) => {
 
-    const createdAluno = await models.createAluno(req.body);
-    return res.status(201).json(createdAluno);
-
+    try{
+        const createdAluno = await models.createAluno(req.body);
+        return res.status(201).json(createdAluno);
+    } catch(error){
+        return res.status(400).json({msg: "algum erro ao se cadastrar"})
+    }
+    
 };
 
 

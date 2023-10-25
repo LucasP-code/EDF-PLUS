@@ -9,8 +9,13 @@ const getAll = async(req,res) => {
 
 const createEscola = async(req, res) => {
 
-    const createdEscola = await models.createEscola(req.body);
-    return res.status(201).json(createdEscola);
+    try{
+        const createdEscola = await models.createEscola(req.body);
+        return res.status(201).json(createdEscola);
+    } catch(error){
+        res.status(500).json({msg: "algum erro ao cadastrar escola"})
+    }
+    
 
 };
 
