@@ -1,5 +1,3 @@
-
-
 const validatePassword = (req,res,next) => {
     const {Senha,confirmarSenha} = req.body;
 
@@ -8,6 +6,10 @@ const validatePassword = (req,res,next) => {
     }
 
     next();
+};
+
+const validateUserExists = async (req,res,next) => {
+    const {email} = req.body;
 };
 
 module.exports = {
