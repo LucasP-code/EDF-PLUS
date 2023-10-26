@@ -7,7 +7,7 @@ const getAll = async() => {
 
     const [alunos] = await connection.execute(query);
     return alunos;
-};
+}; 
 
 const createAluno = async(Aluno) => {
 
