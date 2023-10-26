@@ -32,11 +32,12 @@ Nome_preferencia varchar(30),
 CPF BIGINT,
 Cel_whatsapp INT,
 Email varchar(90),
-Senha varchar(30),
+Senha varchar(150),
 Sexo char(1),
 Estado_civil varchar(20),
 Modalidade varchar(20)
 );
+
 
 drop table Alunos;
 

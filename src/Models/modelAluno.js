@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const bcrypt = require('bcrypt')
 
 
 const getAll = async() => {
@@ -14,7 +15,10 @@ const createAluno = async(Aluno) => {
     const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = Aluno;
     const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
 
-    const [createdAluno] = await connection.execute(query, [Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha,  Sexo, Estado_civil, Modalidade]);
+    const salt = await bcrypt.genSalt(12)
+    const SenhaHash = await bcrypt.hash(Senha,salt)
+
+    const [createdAluno] = await connection.execute(query, [Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, SenhaHash,  Sexo, Estado_civil, Modalidade]);
     return createdAluno;
 };
 
