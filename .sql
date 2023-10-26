@@ -1,45 +1,48 @@
  CREATE DATABASE EDF;
 
- DROP DATABASE EDF;
-
- DROP TABLE Facilitador;
-
-DROP TABLE Facilitador_turma;
-
-DROP TABLE Alunos;
-
 use EDF;
 
 
--- inserir aluno
-INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
-VALUES('Felipe Cavalcante', 'Felipe', '42828831255', 1499551234, 'felipemainyasuo@gmail.com', 'senhalegal', 'M', 'solteiro', 'online');
+-- area cargos
 
--- inseri facilitador
-INSERT INTO Facilitador(Nome, Nome_preferencia, Data_de_nascimento, 
-Estado_civil, CPF, Cel_whatsapp, CEP, endereço, numero, 
-Email, Email_EDF, Senha, Ocupacao, UF, Cidade, Nomes_filhos, Idade_filhos)
-VALUES('Paula Maria Rosse', 'Paula', '1995-01-07', 'casada', 2573781884, 14991461215, 17123345
-, 'rua dias', 1234, 'paulacavalcante123@gmail.com', 'paula.cavalcanteEDF@edf.com','senhalegal', 'facilitadora', 'SP', 'Pompeia', 'Felipe Cavalcante', 12);
+CREATE TABLE Cargos (
+    IDCargos INT PRIMARY KEY,
+    NomeCargo VARCHAR(20)
+);
 
-select * from Facilitador;
-drop table facilitador;
+INSERT INTO Cargos(IDCargos, NomeCargo)
+VALUES (1, 'admin'), (2, 'facilitador'), (3, 'aluno');
+
+select * from Cargos;
+
+
+
+-- area Aluno
 
 CREATE TABLE Alunos(
 ID int not null auto_increment primary key,
+ID_Cargo INT,
 Nome varchar(155),
 Nome_preferencia varchar(30),
 CPF BIGINT,
 Cel_whatsapp INT,
 Email varchar(90),
-Senha varchar(150),
+Senha varchar(30),
 Sexo char(1),
 Estado_civil varchar(20),
-Modalidade varchar(20)
+Modalidade varchar(20),
+FOREIGN KEY (ID_Cargo) REFERENCES Cargos(IDCargos)
 );
 
+-- inserir exemplo de aluno
+INSERT INTO Alunos(ID_Cargo, Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
+VALUES(3, 'Felipe Cavalcante', 'Felipe', '42828831255', 1499551234, 'felipemainyasuo@gmail.com', "senhalegal", 'M', 'solteiro', 'online');
 
-drop table Alunos;
+
+select * from Alunos;
+
+
+-- area crianças
 
 CREATE TABLE Criancas(
 ID int not null auto_increment primary key,
@@ -56,8 +59,11 @@ Cel_whatsapp INT
 );
 
 
+-- area facilitador
+
 CREATE TABLE Facilitador(
 ID int not null auto_increment primary key,
+ID_Cargo INT,
 Nome varchar(155),
 Nome_preferencia varchar(30),
 Data_de_nascimento DATE,
@@ -69,13 +75,38 @@ Endereço varchar(155),
 Numero INT,
 Email varchar(90),
 Email_EDF varchar(90),
-Senha varchar(30),
 Ocupacao varchar(40),
 UF char(2),
 Cidade varchar(40),
 Nomes_filhos varchar(155),
-Idade_filhos INT
+Idade_filhos INT,
+FOREIGN KEY (ID_Cargo) REFERENCES Cargos(IDCargos)
 );
+
+
+-- inserir facilitador
+INSERT INTO Facilitador(ID_Cargo ,Nome, Nome_preferencia, Data_de_nascimento, 
+Estado_civil, CPF, Cel_whatsapp, CEP, endereço, numero, 
+Email, Email_EDF, Ocupacao, UF, Cidade, Nomes_filhos, Idade_filhos)
+VALUES(2 ,'Paula Maria Rosse', 'Paula', '1995-01-07', 'casada', 25737818834, 14991461215, 17123345
+, 'rua dias', 1234, 'paulacavalcante123@gmail.com', 'paula.cavalcanteEDF@edf.com', 'facilitadora', 'SP', 'Pompeia', 'Felipe Cavalcante', 12);
+
+select * from Facilitador;
+
+
+-- area admin
+
+CREATE TABLE Admins (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Cargo INT,
+    Email VARCHAR(90),
+    Senha VARCHAR(150),
+    FOREIGN KEY (ID_Cargo) REFERENCES Cargos(IDCargos)
+);
+
+INSERT INTO Admins(ID_Cargo, Email, Senha) VALUES (1, 'adminEDF123@gmail.com', 'senhadeADM');
+
+select * from Admins;
 
 
 
@@ -149,4 +180,3 @@ VALUES ('1DBV1', 'Desenvolvendo Bebês Virtuosos 2', 'DBV2', 2);
 
 select * from Modulos;
 
-select * from Alunos;
