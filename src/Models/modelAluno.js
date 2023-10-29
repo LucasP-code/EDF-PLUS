@@ -13,7 +13,7 @@ const getAll = async() => {
 const createAluno = async(Aluno) => {
 
     const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = Aluno;
-    const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    const query = 'INSERT INTO Alunos(ID_Cargo ,Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade) VALUES (3 ,?, ?, ?, ?, ?, ?, ?, ?, ?)'
 
     const salt = await bcrypt.genSalt(12)
     const SenhaHash = await bcrypt.hash(Senha,salt)
