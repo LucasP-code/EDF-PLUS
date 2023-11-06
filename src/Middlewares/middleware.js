@@ -1,4 +1,4 @@
-const validatePassword = (req,res,next) => {
+const validatePassword = (req, res,next) => {
     const {Senha , confirmarSenha} = req.body;
 
     if (Senha !== confirmarSenha) {
@@ -16,6 +16,7 @@ const validateLogin = (req, res, error, next) => {
 
     next();
 };
+
 
 const validateToken = (req, res, error, next) => {
     const tokenRecebido = req.header('Authorization');

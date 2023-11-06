@@ -9,7 +9,7 @@ const login = async(Email, Senha) => {
         const [user] = await connection.execute(queryEmail, [Email]);
     
         if (user.length !== 1) {
-          return res.status(401).json({ error: 'Credenciais inválidas' });
+          return null;
         } else {
         return user;
         }

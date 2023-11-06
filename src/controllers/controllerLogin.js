@@ -1,16 +1,18 @@
 const models = require('../Models/modelLogin');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const connection = require('../Models/connection');
 
 
 
-const login = async (req, res) => {
+const login = async(req, res) => {
     const { Email, Senha } = req.body;
 
-    
       const user = await models.login(Email, Senha);
-  
+      
+      if(user == null){
+        return res.status(401).json({ error: 'Credenciais inválidas' });
+      };
+
       const HashedPassword = user[0].Senha;
   
       const passwordMatch = await bcrypt.compare(Senha, HashedPassword);
