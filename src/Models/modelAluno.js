@@ -1,4 +1,4 @@
-const connection = require('./connection');
+const connection = require('../Models/connection');
 const bcrypt = require('bcrypt')
 
 
@@ -36,6 +36,7 @@ const createCrianca = async(infCrianca) => {
     const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
 
     const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
 
     const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
 

@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors())
 
 app.use(routerAluno);
-app.use(routerLogin)
+app.use(routerLogin);
 
 
 

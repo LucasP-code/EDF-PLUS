@@ -5,7 +5,7 @@ const controller = require('../controllers/controllerAluno');
 const middleware = require('../middlewares/middleware')
 
 router.get('/Alunos', controller.getAll);
-router.post('/CadastrarAluno', middleware.validatePassword ,controller.createAluno);
+router.post('/CadastrarAluno', middleware.validateEmail, middleware.validatePassword, controller.createAluno);
 
 router.post('/CadastrarCrianca', controller.createCrianca);
 

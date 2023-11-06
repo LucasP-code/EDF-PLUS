@@ -1,3 +1,6 @@
+const connection = require('../Models/connection');
+
+
 const validatePassword = (req, res,next) => {
     const {Senha , confirmarSenha} = req.body;
 
@@ -7,6 +10,22 @@ const validatePassword = (req, res,next) => {
 
     next();
 };
+
+
+const validateEmail = async(req, res, next) => {
+
+    const {Email} = req.body;
+
+    const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
+
+    const [findEmail] = await connection.execute(queryEmail, [Email])
+
+    if(findEmail.length == 1) {
+        return res.status(401).json({msg: "Email ja cadastrado! utilize outro email"});
+    }
+    next();
+};
+
 
 const validateLogin = (req, res, error, next) => {
 
@@ -39,5 +58,6 @@ module.exports = {
 validatePassword,
 validateLogin,
 validateToken,
+validateEmail,
 
 };
