@@ -1,4 +1,4 @@
-const models = require('../Models/modelAluno');
+const models = require('../models/modelAluno');
 
 
 const getAll = async(req,res) => {
@@ -9,18 +9,27 @@ const getAll = async(req,res) => {
 
 const createAluno = async(req, res) => {
 
-    try{
-        const createdAluno = await models.createAluno(req.body);
-        return res.status(201).json(createdAluno);
-    } catch(error){
-        return res.status(400).json({msg: "algum erro ao se cadastrar"})
-    }
+   
+    const createdAluno = await models.createAluno(req.body);
+    return res.status(201).json(createdAluno);
+   
     
 };
 
 
+const createCrianca = async(req, res) => {
+
+    const createdCrianca = await models.createCrianca(req.body);
+    return res.status(201).json(createdCrianca);
+    
+
+};
+
+
+
 module.exports = {
-    getAll,
-    createAluno,
+getAll,
+createAluno,
+createCrianca,
 
 };

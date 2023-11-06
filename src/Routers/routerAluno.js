@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const controllerLogin = require('../controllers/controllerLogin')
 const controller = require('../controllers/controllerAluno');
-const middleware = require('../Middlewares/middleware');
+
 
 router.get('/Alunos', controller.getAll);
-router.post('/CadastrarAluno', middleware.validatePassword ,controller.createAluno);
-router.post('/Login' , middleware.validateLogin, controllerLogin.userLogin);
+router.post('/CadastrarAluno', controller.createAluno);
 
+router.post('/CadastrarCrianca', controller.createCrianca);
 
 module.exports = router;

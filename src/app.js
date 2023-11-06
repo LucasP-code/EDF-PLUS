@@ -1,13 +1,17 @@
 const express = require('express');
 const app = express();
-const routerAluno = require('./Routers/routerAluno');
-const routerEscola = require('./Routers/routerEscola');
 const cors = require('cors');
+
+
+const routerAluno = require('./routers/routerAluno');
+const routerLogin = require('./routers/routerLogin');
 
 app.use(express.json());
 app.use(cors())
+
 app.use(routerAluno);
-app.use(routerEscola);
+app.use(routerLogin)
+
 
 
 module.exports = app;

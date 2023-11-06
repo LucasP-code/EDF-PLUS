@@ -1,45 +1,46 @@
-const models = require('../Models/modelLogin');
+const models = require('../models/modelLogin');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const connection = require('../models/connection');
 
-const userLogin = async (req, res) => {
+
+
+const login = async (req, res) => {
     const { Email, Senha } = req.body;
-
-    try {
-        const userPasswordResult = await models.userLogin(Email);
-        
-        if (userPasswordResult.msg) {
-            return res.status(401).json({ error: userPasswordResult.msg });
-        }
-
-        const senhaCorreta = userPasswordResult[0].Senha;
-
-        const bcryptRes = await new Promise((resolve, reject) => {
-            bcrypt.compare(Senha, senhaCorreta, (bcryptErr, result) => {
-                if (bcryptErr) {
-                    reject(bcryptErr);
-                }
-                resolve(result);
-            });
-        });
-
-        if (!bcryptRes) {
-            return res.status(401).json({ error: "Email ou senha incorretos!" });
-        }
-
-        const token = jwt.sign({ email: Email }, process.env.SECRET, { expiresIn: '1h' });
-
-        return res.status(200).json({ token });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: "Ocorreu um erro durante a autenticação." });
-    }
-};
-
   
-
-module.exports = {
-
-userLogin,
-
-};
+    try {
+      const queryEmail =
+        'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
+      const [user] = await connection.execute(queryEmail, [Email]);
+  
+      if (user.length !== 1) {
+        return res.status(401).json({ error: 'Credenciais inválidas' });
+      }
+  
+      const HashedPassword = user[0].Senha;
+  
+      const passwordMatch = await bcrypt.compare(Senha, HashedPassword);
+  
+      if (passwordMatch) {
+        const token = jwt.sign(
+          {
+            userId: user[0].ID,
+            Email: user[0].Email,
+            role: user[0].ID_Cargo,
+          },
+          process.env.SECRET,
+          { expiresIn: '1h' }
+        );
+        return res.json({ token: token });
+      } else {
+        return res.status(401).json({ error: 'Credenciais inválidas' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar usuário no banco de dados' });
+    }
+  };
+  
+  module.exports = {
+    login,
+  };
+  

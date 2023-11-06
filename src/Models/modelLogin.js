@@ -1,34 +1,22 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const connection = require('./connection');
 
 
-const userLogin = async (Email) => {
-  const queryEmail =
-    'SELECT Email FROM (SELECT Email FROM Alunos UNION SELECT Email_EDF FROM Facilitador UNION SELECT Email FROM Admins) AS Login_Usuario WHERE Email = ?;';
+const login = async() => {
 
-  try {
-    const [userEmail] = await connection.execute(queryEmail, [Email]);
-
-    if (userEmail.length === 0) {
-      return { msg: "Email não encontrado" };
-    }
-
-    const queryPassword =
-      'SELECT Senha FROM (SELECT Senha, Email FROM Alunos UNION SELECT Senha, Email_EDF FROM Facilitador UNION SELECT Senha, Email FROM Admins) AS Login_Senha WHERE Email = ?';
-
-    const [UserPassword] = await connection.execute(queryPassword, [Email]);
-
-    if (UserPassword.length === 0) {
-      return { msg: "Usuário não encontrado!" };
-    }
-
-    return UserPassword;
-  } catch (error) {
-    return { msg: "Ocorreu um erro ao processar a solicitação" };
-  }
+        const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
+        const [user] = await connection.execute(queryEmail, [Email]);
+    
+        if (user.length !== 1) {
+          return res.status(401).json({ error: 'Credenciais inválidas' });
+        } else {
+        return [user];
+        }
 };
 
-
 module.exports = {
-userLogin,
+
+login,
 
 };
