@@ -2,13 +2,6 @@ const connection = require('./connection');
 const bcrypt = require('bcrypt')
 
 
-const getAll = async() => {
-
-    const query = ('SELECT * FROM Alunos');
-
-    const [alunos] = await connection.execute(query);
-    return alunos;
-}; 
 
 class Aluno {
     constructor(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade){
@@ -69,6 +62,18 @@ const createAluno = async(infAluno) => {
     return createdAluno;
 
 };
+
+
+
+const getAll = async() => {
+
+    const query = ('SELECT * FROM Alunos');
+
+    const [alunos] = await connection.execute(query);
+    return alunos;
+}; 
+
+
 
 
 module.exports = {

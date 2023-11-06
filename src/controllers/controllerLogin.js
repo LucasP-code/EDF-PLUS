@@ -7,15 +7,9 @@ const connection = require('../models/connection');
 
 const login = async (req, res) => {
     const { Email, Senha } = req.body;
-  
-    try {
-      const queryEmail =
-        'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
-      const [user] = await connection.execute(queryEmail, [Email]);
-  
-      if (user.length !== 1) {
-        return res.status(401).json({ error: 'Credenciais inválidas' });
-      }
+
+    
+      const user = await models.login(Email, Senha);
   
       const HashedPassword = user[0].Senha;
   
@@ -35,10 +29,8 @@ const login = async (req, res) => {
       } else {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
-    } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar usuário no banco de dados' });
-    }
-  };
+    } 
+  
   
   module.exports = {
     login,
