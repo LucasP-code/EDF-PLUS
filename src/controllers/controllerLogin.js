@@ -1,7 +1,7 @@
-const models = require('../models/modelLogin');
+const models = require('../Models/modelLogin');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const connection = require('../models/connection');
+const connection = require('../Models/connection');
 
 
 
