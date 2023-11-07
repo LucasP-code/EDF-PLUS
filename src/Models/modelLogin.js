@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const connection = require('../Models/connection');
+const connection = require('./connection');
 
 
 const login = async(Email, Senha) => {

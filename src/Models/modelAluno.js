@@ -1,6 +1,6 @@
-const connection = require('../Models/connection');
+const connection = require('./connection');
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken');
 
 
 class Aluno {
@@ -31,17 +31,15 @@ class Crianca {
     }
 }
 
-const createCrianca = async(infCrianca) => {
+const createCrianca = async(infCrianca, userId) => {
 
     const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
 
     const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-    const userId = req.user.userId;
-
     const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
 
-    const [createdCrianca] = await connection.execute(query, [user, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp])
+    const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp]);
 
     return createdCrianca;
 };
@@ -52,7 +50,7 @@ const createAluno = async(infAluno) => {
 
     const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = infAluno;
     const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade, ID_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
-
+    
 
     const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
     const salt = await bcrypt.genSalt(12)
@@ -64,6 +62,17 @@ const createAluno = async(infAluno) => {
     return createdAluno;
 
 };
+
+const getAllCriancas = async(userId) => {
+
+    const query = 'SELECT * FROM Criancas WHERE ID_Aluno = ?'
+
+    const [CriancasAluno] = await connection.execute(query, [userId])
+    return CriancasAluno;
+};
+
+
+
 
 
 
@@ -82,6 +91,6 @@ module.exports = {
 getAll,
 createAluno,
 createCrianca,
-
+getAllCriancas,
 };
 
