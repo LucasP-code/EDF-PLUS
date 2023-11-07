@@ -1,4 +1,7 @@
 const connection = require('../Models/connection');
+const jwt = require('jsonwebtoken');
+
+
 
 
 const validatePassword = (req, res,next) => {
@@ -37,27 +40,46 @@ const validateLogin = (req, res, error, next) => {
 };
 
 
-const validateToken = (req, res, error, next) => {
-    const tokenRecebido = req.header('Authorization');
-    const secret = process.env.SECRET;
+const verifyToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
 
-    if (!token) {
-        return res.status(401).json({ message: 'Token não fornecido' });
-    }
+    if (token == null) return res.sendStatus(401);
 
-    jwt.verify(token, secret, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET, (err, user) => {
         if (err) {
-          return res.status(403).json({ message: 'Token inválido' });
-        };  
-    });
-};
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    })
+}
+
+const AlunoRole = (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, process.env.SECRET);
+        const role = decodedToken.role;
+
+        if (role == 3) {
+            next();                
+        } else {
+            return res.status(401).json({ message: 'Você não tem permissão para realizar esta ação!' });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'Error ...' });
+    }
+}
+
+
 
 
 
 module.exports = {
 validatePassword,
 validateLogin,
-validateToken,
+verifyToken,
 validateEmail,
+AlunoRole,
 
 };

@@ -37,10 +37,11 @@ const createCrianca = async(infCrianca) => {
 
     const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
+    const userId = req.user.userId;
 
     const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
 
-    const [createdCrianca] = await connection.execute(query, [newCrianca.ID_Aluno, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp])
+    const [createdCrianca] = await connection.execute(query, [user, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp])
 
     return createdCrianca;
 };

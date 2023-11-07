@@ -7,6 +7,7 @@ const getAll = async(req,res) => {
     return res.status(200).json(Alunos);
 };
 
+
 const createAluno = async(req, res) => {
 
    
@@ -16,14 +17,17 @@ const createAluno = async(req, res) => {
     
 };
 
-
-const createCrianca = async(req, res) => {
-
-    const createdCrianca = await models.createCrianca(req.body);
-    return res.status(201).json(createdCrianca);
+const createCrianca = async (req, res) => {
+    const userId = req.user.userId; 
+    const criancaData = req.body;
     
+    
+    criancaData.ID_Aluno = userId;
 
+    const createdCrianca = await models.createCrianca(criancaData);
+    return res.status(201).json(createdCrianca);
 };
+
 
 
 
