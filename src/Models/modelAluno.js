@@ -54,6 +54,7 @@ const createAluno = async(infAluno) => {
 
     const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
     const salt = await bcrypt.genSalt(12)
+    console.log(Senha, salt)
     const SenhaHash = await bcrypt.hash(Senha,salt)
     
     const [createdAluno] = await connection.execute(query, [newAluno.Nome, newAluno.Nome_preferencia, newAluno.CPF, newAluno.Cel_whatsapp, newAluno.Email, SenhaHash, newAluno.Sexo, newAluno.Estado_civil, newAluno.Modalidade])
