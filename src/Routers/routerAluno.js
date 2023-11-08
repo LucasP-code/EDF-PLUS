@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('../controllers/controllerAluno');
-const middleware = require('../middlewares/middleware')
+const middleware = require('../Middlewares/middleware')
 
 router.get('/Alunos', middleware.verifyToken, middleware.AlunoRole, controller.getAll);
 router.get('/SuasCriancas', middleware.verifyToken, middleware.AlunoRole, controller.getAllCriancas)
