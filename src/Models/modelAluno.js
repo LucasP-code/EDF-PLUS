@@ -29,7 +29,7 @@ class Crianca {
         this.Grau_de_parentesco = Grau_de_parentesco,
         this.Cel_whatsapp = Cel_whatsapp
     }
-}
+};
 
 const createCrianca = async(infCrianca, userId) => {
 
@@ -73,7 +73,14 @@ const getAllCriancas = async(userId) => {
 };
 
 
+const getAllInfoAluno = async(userid)  => {
 
+    const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil WHERE ID_Aluno = ?'
+
+    const [InfoAluno] = await connection.execute(query, [userid]);
+    return InfoAluno;
+
+};
 
 
 
@@ -93,5 +100,6 @@ getAll,
 createAluno,
 createCrianca,
 getAllCriancas,
+getAllInfoAluno,
 };
 

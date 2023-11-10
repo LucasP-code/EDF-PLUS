@@ -42,6 +42,16 @@ const getAllCriancas = async (req, res) => {
     
 };
 
+const getAllInfoAluno = async (req, res) => {
+
+    const userId = req.user.userId; 
+    const AlunoData = req.body;
+    AlunoData.ID_Aluno = userId;
+
+    const InfoAluno = await models.getAllInfoAluno(userId);
+    return res.status(201).json(InfoAluno);
+
+};
 
 
 module.exports = {
@@ -49,4 +59,5 @@ getAll,
 createAluno,
 createCrianca,
 getAllCriancas,
+getAllInfoAluno,
 };

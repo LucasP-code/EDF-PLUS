@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
 
-  try {
+  
     const { Email, Senha } = req.body;
 
     const user = await models.login(Email, Senha);
@@ -22,21 +22,19 @@ const login = async (req, res) => {
       const token = jwt.sign(
         {
           userId: user[0].ID,
+          Nome_preferencia: user[0].Nome_preferencia,
           Email: user[0].Email,
           role: user[0].ID_Cargo,
         },
         process.env.SECRET,
         { expiresIn: '1h' }
       );
-      return res.json({ token: token });
+      return res.json({ token });
     } else {
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
-  } catch (error) {
-    return res.status(401).json({ error: 'Ocorreu um Erro' });
-  }
+  } 
 
-}
 
 
 module.exports = {
