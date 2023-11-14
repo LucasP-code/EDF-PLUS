@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 
+
 const validatePassword = (req, res,next) => {
     const {Senha , confirmarSenha} = req.body;
 
@@ -54,6 +55,7 @@ const verifyToken = (req, res, next) => {
         next();
     })
 }
+
 
 const AlunoRole = (req, res, next) => {
     try {
