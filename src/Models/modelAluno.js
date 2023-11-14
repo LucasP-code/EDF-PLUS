@@ -92,16 +92,11 @@ const getAllCriancas = async(userId) => {
 
 const getAllInfoAluno = async(userid)  => {
 
-    try {
-        const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil WHERE ID_Aluno = ?'
+    
+        const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil FROM Alunos WHERE ID = ?'
 
         const [InfoAluno] = await connection.execute(query, [userid]);
-        return InfoAluno;
-    } catch (error) {
-        return res.status(500).json({ status: 6 });
-    }
-
-    
+        return InfoAluno;    
 
 };
 

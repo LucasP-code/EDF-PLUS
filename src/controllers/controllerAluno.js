@@ -60,17 +60,14 @@ const getAllCriancas = async (req, res) => {
 
 const getAllInfoAluno = async (req, res) => {
 
-
-    try {
+   
         const userId = req.user.userId; 
         const AlunoData = req.body;
         AlunoData.ID_Aluno = userId;
 
         const InfoAluno = await models.getAllInfoAluno(userId);
-        return res.status(201).json(InfoAluno);
-    } catch (error) {
-        return res.status(500).json({ status: 6 });
-    }
+        return res.status(200).json(InfoAluno);
+    
 };
 
 
