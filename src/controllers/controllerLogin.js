@@ -4,14 +4,13 @@ const jwt = require('jsonwebtoken');
 
 
 const login = async (req, res) => {
-
-  
+  try {
     const { Email, Senha } = req.body;
 
     const user = await models.login(Email, Senha);
 
     if (user == null) {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
+      return res.status(401).json({status: 11, error: 'Credenciais inválidas' });
     };
 
     const HashedPassword = user[0].Senha;
@@ -31,8 +30,13 @@ const login = async (req, res) => {
       );
       return res.json({ token });
     } else {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
+      return res.status(401).json({ status: 12 ,error: 'Credenciais inválidas' });
     }
+  } catch (error) {
+    return res.status(500).json({ status: 8 });
+  }
+  
+    
   } 
 
 
