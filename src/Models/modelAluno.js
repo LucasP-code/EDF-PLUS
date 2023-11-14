@@ -33,52 +33,75 @@ class Crianca {
 
 const createCrianca = async(infCrianca, userId) => {
 
-    const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
+    try {
+        const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
 
-    const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-    const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
+        const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
 
-    const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp]);
+        const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp]);
 
-    return createdCrianca;
+        return createdCrianca;
+    } catch (error) {
+        return res.status(500).json({ status: 3});
+    }
+
+    
 };
 
 
 
 const createAluno = async(infAluno) => {
 
-    const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = infAluno;
-    const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade, ID_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
+    try {
+        const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = infAluno;
+        const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade, ID_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
+        
     
+        const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
+        const salt = await bcrypt.genSalt(12)
+        console.log(Senha, salt)
+        const SenhaHash = await bcrypt.hash(Senha,salt)
+        
+        const [createdAluno] = await connection.execute(query, [newAluno.Nome, newAluno.Nome_preferencia, newAluno.CPF, newAluno.Cel_whatsapp, newAluno.Email, SenhaHash, newAluno.Sexo, newAluno.Estado_civil, newAluno.Modalidade])
+        
+    
+        return createdAluno;
+    } catch (error) {
+        return res.status(500).json({ status: 4 });
+    }
 
-    const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
-    const salt = await bcrypt.genSalt(12)
-    console.log(Senha, salt)
-    const SenhaHash = await bcrypt.hash(Senha,salt)
     
-    const [createdAluno] = await connection.execute(query, [newAluno.Nome, newAluno.Nome_preferencia, newAluno.CPF, newAluno.Cel_whatsapp, newAluno.Email, SenhaHash, newAluno.Sexo, newAluno.Estado_civil, newAluno.Modalidade])
-    
-
-    return createdAluno;
 
 };
 
 const getAllCriancas = async(userId) => {
+    try {
+        const query = 'SELECT * FROM Criancas WHERE ID_Aluno = ?'
 
-    const query = 'SELECT * FROM Criancas WHERE ID_Aluno = ?'
+        const [CriancasAluno] = await connection.execute(query, [userId])
+        return CriancasAluno;
+    } catch (error) {
+        return res.status(500).json({ status: 5});
+    }
 
-    const [CriancasAluno] = await connection.execute(query, [userId])
-    return CriancasAluno;
+    
 };
 
 
 const getAllInfoAluno = async(userid)  => {
 
-    const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil WHERE ID_Aluno = ?'
+    try {
+        const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil WHERE ID_Aluno = ?'
 
-    const [InfoAluno] = await connection.execute(query, [userid]);
-    return InfoAluno;
+        const [InfoAluno] = await connection.execute(query, [userid]);
+        return InfoAluno;
+    } catch (error) {
+        return res.status(500).json({ status: 6 });
+    }
+
+    
 
 };
 
@@ -86,10 +109,16 @@ const getAllInfoAluno = async(userid)  => {
 
 const getAll = async() => {
 
-    const query = ('SELECT * FROM Alunos');
+    try {
+        const query = ('SELECT * FROM Alunos');
 
-    const [alunos] = await connection.execute(query);
-    return alunos;
+        const [alunos] = await connection.execute(query);
+        return alunos;
+    } catch (error) {
+        return res.status(500).json({ status: 7 });
+    }
+
+    
 }; 
 
 

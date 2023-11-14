@@ -5,35 +5,44 @@ const jwt = require('jsonwebtoken');
 
 
 const validatePassword = (req, res,next) => {
-    const {Senha , confirmarSenha} = req.body;
+    try {
+        const {Senha , confirmarSenha} = req.body;
 
-    if (Senha !== confirmarSenha) {
-        return res.status(422).json({msg: 'As senhas não conferem!'})
+        if (Senha !== confirmarSenha) {
+            return res.status(422).json({msg: 'As senhas não conferem!'})
+        }
+
+        next();
+    } catch (error) {
+        return res.status(500).json({ status: 10});
     }
-
-    next();
+    
 };
 
 
 const validateEmail = async(req, res, next) => {
+    try {
+        const {Email} = req.body;
 
-    const {Email} = req.body;
+        const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
 
-    const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
+        const [findEmail] = await connection.execute(queryEmail, [Email])
 
-    const [findEmail] = await connection.execute(queryEmail, [Email])
-
-    if(findEmail.length == 1) {
-        return res.status(401).json({msg: "Email ja cadastrado! utilize outro email", status: 3});
+        if(findEmail.length == 1) {
+            return res.status(401).json({msg: "Email ja cadastrado! utilize outro email", status: 13});
+        }
+        next();
+    } catch (error) {
+        return res.status(500).json({ status: 10});
     }
-    next();
+    
 };
 
 
 const validateLogin = (req, res, error, next) => {
 
     if (error) {
-        return res.status(500).json({ error: 'Erro no servidor' });
+        return res.status(500).json({ status: 10});
       } 
 
     next();
@@ -41,18 +50,23 @@ const validateLogin = (req, res, error, next) => {
 
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    try{
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
 
-    if (token == null) return res.sendStatus(401);
+        if (token == null) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.SECRET, (err, user) => {
-        if (err) {
-            return res.sendStatus(403);
-        }
-        req.user = user;
-        next();
-    })
+        jwt.verify(token, process.env.SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            req.user = user;
+            next();
+        })
+    } catch (error) {
+        return res.status(500).json({ status: 10});
+    };
+    
 }
 
 const AlunoRole = (req, res, next) => {
@@ -67,7 +81,7 @@ const AlunoRole = (req, res, next) => {
             return res.status(401).json({ message: 'Você não tem permissão para realizar esta ação!' });
         }
     } catch (error) {
-        return res.status(500).json({ message: 'Error ...' });
+        return res.status(500).json({ status: 10 });
     }
 }
 
