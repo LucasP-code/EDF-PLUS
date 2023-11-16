@@ -26,8 +26,7 @@ class Crianca {
         this.CPF = CPF,
         this.Data_de_nascimento = Data_de_nascimento,
         this.Sexo = Sexo,
-        this.Grau_de_parentesco = Grau_de_parentesco,
-        this.Cel_whatsapp = Cel_whatsapp
+        this.Grau_de_parentesco = Grau_de_parentesco
     }
 };
 
@@ -36,11 +35,11 @@ const createCrianca = async(infCrianca, userId) => {
     try {
         const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
 
-        const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-        const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp)
+        const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco)
 
-        const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco, newCrianca.Cel_whatsapp]);
+        const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco]);
 
         return createdCrianca;
     } catch (error) {

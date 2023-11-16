@@ -102,14 +102,13 @@ CREATE TABLE Criancas (
     Data_de_nascimento DATE,
     Sexo CHAR(1),
     Grau_de_parentesco VARCHAR(25),
-    Cel_whatsapp BIGINT,
     FOREIGN KEY (ID_Aluno) REFERENCES Alunos(ID),
     FOREIGN KEY (ID_Escola) REFERENCES Escola(ID),
     FOREIGN KEY (ID_Turma) REFERENCES Turma(ID)
 );
 
-INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma,Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp) 
-VALUES (1, 1, 1,"Fatima benez", 50652838855,"2005-1-11", "F", "filho", 14991463513);
+INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma,Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) 
+VALUES (1, 1, 1,"Fatima benez", 50652838855,"2005-1-11", "F", "filho");
 
 
 
