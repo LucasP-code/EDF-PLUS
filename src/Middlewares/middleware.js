@@ -30,7 +30,7 @@ const validateCPF = async(req, res, next) => {
         const [findCPF] = await connection.execute(queryCPF, [CPF])
 
         if(findCPF.length == 1) {
-            return res.status(401).json({msg: "CPF ja cadastrado!", status: 13});
+            return res.status(401).json({msg: "CPF ja cadastrado!", status: 14});
         }
         next();
     }catch (error) {
