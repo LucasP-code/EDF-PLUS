@@ -18,7 +18,7 @@ class Aluno {
 };
 
 class Crianca {
-    constructor(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp){
+    constructor(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco){
         this.ID_Aluno = ID_Aluno,
         this.ID_Escola = ID_Escola,
         this.ID_Turma = ID_Turma,
@@ -48,7 +48,6 @@ const createCrianca = async(infCrianca, userId) => {
 
     
 };
-
 
 
 const createAluno = async(infAluno) => {

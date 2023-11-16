@@ -20,9 +20,27 @@ const validatePassword = (req, res,next) => {
     
 };
 
+const validateCPF = async(req, res, next) => {
+
+    
+        const {CPF} = req.body;
+
+        const queryCPF = 'SELECT * FROM (SELECT CPF FROM Alunos UNION SELECT CPF FROM Facilitador UNION SELECT CPF FROM Criancas) AS Login_Senha WHERE CPF = ?';
+
+        const [findCPF] = await connection.execute(queryCPF, [CPF])
+
+        if(findCPF.length == 1) {
+            return res.status(401).json({msg: "CPF ja cadastrado!", status: 13});
+        }
+        next();
+    
+};
+
+
+
 
 const validateEmail = async(req, res, next) => {
-    try {
+    
         const {Email} = req.body;
 
         const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
@@ -33,10 +51,7 @@ const validateEmail = async(req, res, next) => {
             return res.status(401).json({msg: "Email ja cadastrado! utilize outro email", status: 13});
         }
         next();
-    } catch (error) {
-        return res.status(500).json({ status: 10});
-    }
-    
+  
 };
 
 
@@ -97,5 +112,6 @@ validateLogin,
 verifyToken,
 validateEmail,
 AlunoRole,
+validateCPF,
 
 };

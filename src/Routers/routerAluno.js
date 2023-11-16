@@ -8,8 +8,8 @@ router.get('/Alunos', middleware.verifyToken, middleware.AlunoRole, controller.g
 
 router.get('/InfoAluno', middleware.verifyToken, middleware.AlunoRole, controller.getAllInfoAluno);
 router.get('/SuasCriancas', middleware.verifyToken, middleware.AlunoRole, controller.getAllCriancas);
-router.post('/CadastrarAluno', middleware.validateEmail, middleware.validatePassword, controller.createAluno);
-router.post('/CadastrarCrianca',  middleware.verifyToken, middleware.AlunoRole,controller.createCrianca);
+router.post('/CadastrarAluno', middleware.validateEmail, middleware.validateCPF, middleware.validatePassword, controller.createAluno);
+router.post('/CadastrarCrianca',  middleware.verifyToken, middleware.AlunoRole, middleware.validateCPF,controller.createCrianca);
 
 
 module.exports = router;
