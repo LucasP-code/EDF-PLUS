@@ -3,8 +3,8 @@ const app = express();
 const cors = require('cors');
 
 
-const routerAluno = require('./routers/routerAluno');
-const routerLogin = require('./routers/routerLogin');
+const routerAluno = require('./Routers/routerAluno');
+const routerLogin = require('./Routers/routerLogin');
 
 app.use(express.json());
 app.use(cors());
