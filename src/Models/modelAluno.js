@@ -33,9 +33,9 @@ class Crianca {
 const createCrianca = async(infCrianca, userId) => {
 
     try {
-        const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco, Cel_whatsapp } = infCrianca;
+        const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco } = infCrianca;
 
-        const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco)
 

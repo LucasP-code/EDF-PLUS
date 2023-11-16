@@ -100,7 +100,7 @@ CREATE TABLE Criancas (
     Nome VARCHAR(155),
     CPF BIGINT,
     Data_de_nascimento DATE,
-    Sexo CHAR(1),
+    Sexo VARCHAR(20),
     Grau_de_parentesco VARCHAR(25),
     FOREIGN KEY (ID_Aluno) REFERENCES Alunos(ID),
     FOREIGN KEY (ID_Escola) REFERENCES Escola(ID),
@@ -161,11 +161,11 @@ INSERT INTO Admins(ID_Cargo, Email, Senha) VALUES (1, 'adminEDF123@gmail.com', '
 
 
 CREATE TABLE Facilitador_turma(
-ID_turma INT,
-ID_facilitador INT,
-foreign key (ID_facilitador) references Facilitador(ID),
-foreign key (ID_turma) references Turma(ID)
-
+    ID_turma INT,
+    ID_facilitador INT,
+    FOREIGN KEY (ID_facilitador) REFERENCES Facilitador(ID),
+    FOREIGN KEY (ID_turma) REFERENCES Turma(ID)
 );
+
 
 -- SELECT Turma.*,Escola.Nome_escola FROM Turma Inner join Escola ON Turma.ID_Escola = Escola.ID;
