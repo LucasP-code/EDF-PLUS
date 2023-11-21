@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
 
+
 class Aluno {
     constructor(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade){
         this.Nome = Nome, 
@@ -69,6 +70,7 @@ const createAluno = async(infAluno) => {
 
 };
 
+
 const getAllCriancas = async(userId) => {
     try {
         const query = 'SELECT * FROM Criancas WHERE ID_Aluno = ?'
@@ -92,7 +94,6 @@ const getAllInfoAluno = async(userid)  => {
         return InfoAluno;    
 
 };
-
 
 
 const getAll = async() => {

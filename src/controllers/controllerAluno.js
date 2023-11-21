@@ -1,6 +1,15 @@
 const models = require('../Models/modelAluno');
 
 
+/**
+ * @swagger
+ * /Alunos:
+ *   get:
+ *     summary: mostra todos os alunos cadastrados
+ *     responses:
+ *       '200':
+ *         description: esta mostrando todos os alunos cadastrados
+ */
 const getAll = async(req,res) => {
 
     try {
@@ -27,16 +36,14 @@ const createAluno = async(req, res) => {
 const createCrianca = async (req, res) => {
     
 
-    try {
+    
         const userId = req.user.userId; 
         const criancaData = req.body;
         criancaData.ID_Aluno = userId;
     
         const createdCrianca = await models.createCrianca(criancaData, userId);
         return res.status(201).json(createdCrianca);
-    } catch (error) {
-        return res.status(500).json({ status: 3});
-    }
+    
 };
 
 

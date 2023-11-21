@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "API EDF+",
+        "description": "API com o objetivo de retornar respostas do banco para o usuario",
+        "termsOfService": "",
+        "contact":{
+            "email": "emailteste123@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths":{
+        "/CadastrarAluno": {
+            "post": {
+                "summary": "Cadastro do aluno",
+                "description": "Rota com o objetivo de cadastrar o aluno no site",
+                "tags": ["Cadastro"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/componets/schemas/Aluno"
+                            }
+                        }
+                    }
+
+                    },
+                    "responses": {
+                        "500": {
+                            "description": "status: 4"
+                        },
+                        "422": {
+                            "description": "As senhas não conferem, status "
+                        },
+                        "400":{
+                            "description": "CPF ja cadastrado, status 14"
+                        },
+                        "401":{
+                            "description": "Email ja cadastrado, status 13"
+                        },
+                        "201":{
+                            "description": "usuario cadastrado com sucesso!"
+                    }
+                }
+            }
+        }
+    },
+    "componets": {
+        "schemas": {
+            "Aluno": {
+                "type": "object",
+                "properties": {
+                    "Nome": {
+                        "type": "string"
+                    },
+                    "Nome_preferencia":{
+                        "type": "string"
+                    },
+                    "CPF":{
+                        "type": "number"
+                    },
+                    "Cel_whatsapp":{
+                        "type": "number"
+                    },
+                    "Email":{
+                        "type": "string"
+                    },
+                    "Senha":{
+                        "type": "string"
+                    },
+                    "Sexo":{
+                        "type": "string"
+                    },
+                    "Estado_civil":{
+                        "type": "string"
+                    },
+                    "Modalidade":{
+                        "type": "string"
+                    }
+            }
+        }
+    }
+    }
+}

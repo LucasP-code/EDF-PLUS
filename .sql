@@ -65,10 +65,6 @@ VALUES ('1DBV1', 'Desenvolvendo Bebês Virtuosos 2', 'DBV2', 2);
 
 
 
-
-
-
-
 CREATE TABLE Turma(
 ID int not null auto_increment primary key,
 ID_Escola INT,
@@ -83,11 +79,6 @@ foreign key (ID_Modulo) references Modulos(ID)
 
 INSERT INTO Turma(ID_Escola, ID_Modulo, Modalidade, Cidade, UF)
 Values(1, 1, 'online', 'Pompeia', 'SP');
-
-
-
-
-
 
 
 -- area crianças
@@ -109,7 +100,6 @@ CREATE TABLE Criancas (
 
 INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma,Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) 
 VALUES (1, 1, 1,"Fatima benez", 50652838855,"2005-1-11", "F", "filho");
-
 
 
 
