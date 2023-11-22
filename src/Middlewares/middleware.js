@@ -25,10 +25,11 @@ const validateCPF = async(req, res, next) => {
     try{
         const {CPF} = req.body;
 
-        const queryCPF = 'SELECT * FROM (SELECT CPF FROM Alunos UNION SELECT CPF FROM Facilitador UNION SELECT CPF FROM Criancas) AS Login_Senha WHERE CPF = ?';
+        const queryCPF = 'SELECT * FROM (SELECT cpf FROM Alunos UNION SELECT cpf FROM Facilitador UNION SELECT cpf FROM Criancas) AS Login_Senha WHERE cpf = ?';
 
         const [findCPF] = await connection.execute(queryCPF, [CPF])
 
+        
         if(findCPF.length == 1) {
             return res.status(401).json({msg: "CPF ja cadastrado!", status: 14});
         }
@@ -46,7 +47,7 @@ const validateEmail = async(req, res, next) => {
     try{
         const {Email} = req.body;
 
-        const queryEmail = 'SELECT * FROM (SELECT Senha, Email, ID, ID_Cargo FROM Alunos UNION SELECT Senha, Email, ID, ID_Cargo FROM Facilitador UNION SELECT Senha, Email, ID, ID_Cargo FROM Admins) AS Login_Senha WHERE Email = ?';
+        const queryEmail = 'SELECT * FROM (SELECT senha, email, id, idCargo FROM Alunos UNION SELECT senha, email, id, idCargo FROM Facilitador UNION SELECT senha, email, id, idCargo FROM Admins) AS Login_Senha WHERE email = ?';
 
         const [findEmail] = await connection.execute(queryEmail, [Email])
 

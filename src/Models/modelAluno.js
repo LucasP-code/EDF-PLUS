@@ -5,41 +5,41 @@ const bcrypt = require('bcrypt')
 
 
 class Aluno {
-    constructor(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade){
-        this.Nome = Nome, 
-        this.Nome_preferencia = Nome_preferencia, 
-        this.CPF = CPF, 
-        this.Cel_whatsapp = Cel_whatsapp, 
-        this.Email = Email, 
-        this.Senha = Senha, 
-        this.Sexo = Sexo, 
-        this.estadoCivil = Estado_civil,  
-        this.Modalidade = Modalidade
+    constructor(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade){
+        this.nome = nome, 
+        this.nomePreferencia = nomePreferencia, 
+        this.cpf = cpf, 
+        this.celWhatsapp = celWhatsapp, 
+        this.email = email, 
+        this.senha = senha, 
+        this.sexo = sexo, 
+        this.estadoCivil = estadoCivil,  
+        this.modalidade = modalidade
     }
 };
 
 class Crianca {
-    constructor(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco){
-        this.ID_Aluno = ID_Aluno,
-        this.ID_Escola = ID_Escola,
-        this.ID_Turma = ID_Turma,
-        this.Nome = Nome,
-        this.CPF = CPF,
-        this.Data_de_nascimento = Data_de_nascimento,
-        this.Sexo = Sexo,
-        this.Grau_de_parentesco = Grau_de_parentesco
+    constructor(idAluno, idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco){
+        this.idAluno = idAluno,
+        this.idEscola = idEscola,
+        this.idTurma = idTurma,
+        this.nome = nome,
+        this.cpf = cpf,
+        this.dataNascimento = dataNascimento,
+        this.sexo = sexo,
+        this.grauParentesco = grauParentesco
     }
 };
 
 const createCrianca = async(infCrianca, userId) => {
     try{
-    const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco } = infCrianca;
+    const {idAluno, idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco } = infCrianca;
 
-    const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    const query = "INSERT INTO Criancas(idAluno, idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
-    const newCrianca = new Crianca(ID_Aluno ,ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco)
+    const newCrianca = new Crianca(idAluno ,idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco)
 
-    const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco]);
+    const [createdCrianca] = await connection.execute(query, [userId, newCrianca.idEscola, newCrianca.idTurma, newCrianca.nome, newCrianca.cpf, newCrianca.dataNascimento, newCrianca.sexo, newCrianca.grauParentesco]);
 
     return createdCrianca;
     } catch(error){
@@ -51,16 +51,16 @@ const createCrianca = async(infCrianca, userId) => {
 const createAluno = async(infAluno) => {
 
     try {
-        const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = infAluno;
+        const {nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade} = infAluno;
 
-        const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade, ID_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
+        const query = 'INSERT INTO Alunos(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade, idCargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
         
-        const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
+        const newAluno = new Aluno(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade)
 
         const salt = await bcrypt.genSalt(12)
         const SenhaHash = await bcrypt.hash(Senha,salt)
         
-        const [createdAluno] = await connection.execute(query, [newAluno.Nome, newAluno.Nome_preferencia, newAluno.CPF, newAluno.Cel_whatsapp, newAluno.Email, SenhaHash, newAluno.Sexo, newAluno.Estado_civil, newAluno.Modalidade])
+        const [createdAluno] = await connection.execute(query, [newAluno.nome, newAluno.nomePreferencia, newAluno.cpf, newAluno.celWhatsapp, newAluno.email, SenhaHash, newAluno.sexo, newAluno.estadoCivil, newAluno.modalidade])
         
     
         return createdAluno;
@@ -75,7 +75,7 @@ const createAluno = async(infAluno) => {
 
 const getAllCriancas = async(userId) => {
     try {
-        const query = 'SELECT * FROM Criancas WHERE ID_Aluno = ?'
+        const query = 'SELECT * FROM Criancas WHERE idAluno = ?'
 
         const [CriancasAluno] = await connection.execute(query, [userId])
         return CriancasAluno;
@@ -90,7 +90,7 @@ const getAllCriancas = async(userId) => {
 const getAllInfoAluno = async(userid)  => {
 
     
-        const query = 'SELECT Nome, Nome_preferencia, Sexo, CPF, Estado_civil, Email, Cel_whatsapp FROM Alunos WHERE ID = ?'
+        const query = 'SELECT nome, nomePreferencia, sexo, cpf, estadoCivil, email, celWhatsapp FROM Alunos WHERE id = ?'
 
         const [InfoAluno] = await connection.execute(query, [userid]);
         return InfoAluno;    
