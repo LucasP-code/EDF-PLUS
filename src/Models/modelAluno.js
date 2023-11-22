@@ -1,6 +1,6 @@
 const connection = require('./connection');
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
+
 
 
 
@@ -13,7 +13,7 @@ class Aluno {
         this.Email = Email, 
         this.Senha = Senha, 
         this.Sexo = Sexo, 
-        this.Estado_civil = Estado_civil,  
+        this.estadoCivil = Estado_civil,  
         this.Modalidade = Modalidade
     }
 };
@@ -32,7 +32,7 @@ class Crianca {
 };
 
 const createCrianca = async(infCrianca, userId) => {
-
+    try{
     const {ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco } = infCrianca;
 
     const query = "INSERT INTO Criancas(ID_Aluno, ID_Escola, ID_Turma, Nome, CPF, Data_de_nascimento, Sexo, Grau_de_parentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -42,7 +42,9 @@ const createCrianca = async(infCrianca, userId) => {
     const [createdCrianca] = await connection.execute(query, [userId, newCrianca.ID_Escola, newCrianca.ID_Turma, newCrianca.Nome, newCrianca.CPF, newCrianca.Data_de_nascimento, newCrianca.Sexo, newCrianca.Grau_de_parentesco]);
 
     return createdCrianca;
-    
+    } catch(error){
+        return error
+    };
 };
 
 
@@ -50,12 +52,12 @@ const createAluno = async(infAluno) => {
 
     try {
         const {Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade} = infAluno;
+
         const query = 'INSERT INTO Alunos(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade, ID_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
         
-    
         const newAluno = new Aluno(Nome, Nome_preferencia, CPF, Cel_whatsapp, Email, Senha, Sexo, Estado_civil, Modalidade)
+
         const salt = await bcrypt.genSalt(12)
-        console.log(Senha, salt)
         const SenhaHash = await bcrypt.hash(Senha,salt)
         
         const [createdAluno] = await connection.execute(query, [newAluno.Nome, newAluno.Nome_preferencia, newAluno.CPF, newAluno.Cel_whatsapp, newAluno.Email, SenhaHash, newAluno.Sexo, newAluno.Estado_civil, newAluno.Modalidade])

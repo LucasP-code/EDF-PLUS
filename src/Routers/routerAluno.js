@@ -6,7 +6,7 @@ const middleware = require('../middlewares/middleware');
 
 
 
-router.get('/Alunos', middleware.verifyToken, middleware.AlunoRole, controller.getAll);
+//router.get('/Alunos', middleware.verifyToken, middleware.AlunoRole, controller.getAll);
 
 
 

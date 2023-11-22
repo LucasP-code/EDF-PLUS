@@ -10,11 +10,11 @@
         "version": "1.0.0"
     },
     "paths":{
-        "/CadastrarAluno": {
+        "/Login": {
             "post": {
-                "summary": "Cadastro do aluno",
-                "description": "Rota com o objetivo de cadastrar o aluno no site",
-                "tags": ["Cadastro"],
+                "summary": "Login",
+                "description": "Rota com o objetivo de realizar o login no site, utilizando Email e Senha, caso o login seja um sucesso, ele deve retornar um token para acesso a outas informações do usuario logado ",
+                "tags": ["Login"],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -23,14 +23,37 @@
                             }
                         }
                     }
-
-                    },
+                },
+                    "responses": {
+                        "401": {
+                            "description": "Credenciais invalidas, status: 11"
+                        },
+                        "500": {
+                            "description": "problema interno de login, status: 8"
+                        }
+                    }
+            }
+        },
+        "/CadastrarAluno": {
+            "post": {
+                "summary": "Cadastro do aluno",
+                "description": "Rota com o objetivo de cadastrar o aluno no site, a conta criada pelo aluno ja vem inserido com o cargo de aluno (ID_Cargo = 3) e ID auto increment. CPF e Email são UNIQUE, ou seja, são unicos para cada usuario",
+                "tags": ["Aluno"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/componets/schemas/Aluno"
+                            }
+                        }
+                    }
+                },
                     "responses": {
                         "500": {
-                            "description": "status: 4"
+                            "description": "Erro ao se cadastrar, status: 4"
                         },
                         "422": {
-                            "description": "As senhas não conferem, status "
+                            "description": "As senhas não conferem"
                         },
                         "400":{
                             "description": "CPF ja cadastrado, status 14"
@@ -40,8 +63,32 @@
                         },
                         "201":{
                             "description": "usuario cadastrado com sucesso!"
+                        }
                     }
-                }
+            }
+        },
+        "/CadastrarCrianca": {
+            "post": {
+                "summary": "Cadastro da criança",
+                "description": "Rota com o objetivo de cadastrar a criança do responsavel em seu perfil no site, a criança é cadastrada utilizando o ID do aluno logado, ID da escola cadastrada e da turma. A criança tambem possui informações do tipo UNIQUE que seria o CPF.",
+                "tags": ["Aluno"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/componets/schemas/Criança"
+                            }
+                        }
+                    }
+                },
+                    "responses": {
+                        "500": {
+                            "description": "Erro ao cadastrar uma criança, status: 3"
+                        },
+                        "401": {
+                            "description": "CPF ja cadastrado, status: 14"
+                        }
+                    }
             }
         }
     },
@@ -77,8 +124,39 @@
                     "Modalidade":{
                         "type": "string"
                     }
+                }
+            },
+            "Criança": {
+                "type": "object",
+                "properties": {
+                    "ID_Aluno": {
+                        "type": "number"
+                    },
+                    "ID_Escola":{
+                        "type": "number"
+                    },
+                    "ID_Turma":{
+                        "type": "number"
+                    },
+                    "Nome":{
+                        "type": "string"
+                    },
+                    "CPF":{
+                        "type": "number"
+                    },
+                    "Data_de_nascimento":{
+                        "type": "string"
+                    },
+                    "Sexo":{
+                        "type": "string"
+                    },
+                    "Grau_de_parentesco":{
+                        "type": "string"
+                    }
+                }
             }
+            }
+
+
         }
     }
-    }
-}
