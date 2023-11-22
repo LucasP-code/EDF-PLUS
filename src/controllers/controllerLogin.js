@@ -5,17 +5,17 @@ const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
   try {
-    const { Email, Senha } = req.body;
-
-    const user = await models.login(Email, Senha);
-
+    const { email, senha } = req.body;
+    console.log(req.body);
+    const user = await models.login(email, senha);
+    
     if (user == null) {
       return res.status(401).json({status: 11, error: 'Credenciais inválidas' });
     };
 
-    const HashedPassword = user[0].Senha;
+    const HashedPassword = user[0].senha;
 
-    const passwordMatch = await bcrypt.compare(Senha, HashedPassword);
+    const passwordMatch = await bcrypt.compare(senha, HashedPassword);
 
     if (passwordMatch) {
       const token = jwt.sign(

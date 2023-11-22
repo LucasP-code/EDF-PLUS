@@ -15,10 +15,11 @@ const getAll = async(req,res) => {
 const createAluno = async(req, res) => {
 
     try {
+        console.log(req.body);
         const createdAluno = await models.createAluno(req.body);
         return res.status(201).json(createdAluno);
     } catch (error) {
-        return res.status(500).json({ status: 4 });
+        return res.status(500).json({ status: 4 , error: error.message});
     }
     
 };

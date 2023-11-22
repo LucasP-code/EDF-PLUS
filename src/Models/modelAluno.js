@@ -32,7 +32,6 @@ class Crianca {
 };
 
 const createCrianca = async(infCrianca, userId) => {
-    try{
     const {idAluno, idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco } = infCrianca;
 
     const query = "INSERT INTO Criancas(idAluno, idEscola, idTurma, nome, cpf, dataNascimento, sexo, grauParentesco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -42,31 +41,24 @@ const createCrianca = async(infCrianca, userId) => {
     const [createdCrianca] = await connection.execute(query, [userId, newCrianca.idEscola, newCrianca.idTurma, newCrianca.nome, newCrianca.cpf, newCrianca.dataNascimento, newCrianca.sexo, newCrianca.grauParentesco]);
 
     return createdCrianca;
-    } catch(error){
-        return error
-    };
 };
 
 
 const createAluno = async(infAluno) => {
 
-    try {
         const {nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade} = infAluno;
-
+        console.log(infAluno);
         const query = 'INSERT INTO Alunos(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade, idCargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
         
         const newAluno = new Aluno(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade)
-
+        
         const salt = await bcrypt.genSalt(12)
-        const SenhaHash = await bcrypt.hash(Senha,salt)
+        const SenhaHash = await bcrypt.hash(senha,salt)
         
         const [createdAluno] = await connection.execute(query, [newAluno.nome, newAluno.nomePreferencia, newAluno.cpf, newAluno.celWhatsapp, newAluno.email, SenhaHash, newAluno.sexo, newAluno.estadoCivil, newAluno.modalidade])
         
     
         return createdAluno;
-    } catch (error) {
-        return res.status(500).json({ status: 4 });
-    }
 
     
 

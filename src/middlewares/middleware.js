@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken');
 
 const validatePassword = (req, res,next) => {
     try {
-        const {Senha , confirmarSenha} = req.body;
+        const {senha , confirmarSenha} = req.body;
 
-        if (Senha !== confirmarSenha) {
+        if (senha !== confirmarSenha) {
             return res.status(422).json({msg: 'As senhas não conferem!'})
         }
 
@@ -23,11 +23,11 @@ const validatePassword = (req, res,next) => {
 const validateCPF = async(req, res, next) => {
 
     try{
-        const {CPF} = req.body;
+        const {cpf} = req.body;
 
         const queryCPF = 'SELECT * FROM (SELECT cpf FROM Alunos UNION SELECT cpf FROM Facilitador UNION SELECT cpf FROM Criancas) AS Login_Senha WHERE cpf = ?';
 
-        const [findCPF] = await connection.execute(queryCPF, [CPF])
+        const [findCPF] = await connection.execute(queryCPF, [cpf])
 
         
         if(findCPF.length == 1) {
@@ -45,15 +45,15 @@ const validateCPF = async(req, res, next) => {
 const validateEmail = async(req, res, next) => {
     
     try{
-        const {Email} = req.body;
-
+        const {email} = req.body;
+        
         const queryEmail = 'SELECT * FROM (SELECT senha, email, id, idCargo FROM Alunos UNION SELECT senha, email, id, idCargo FROM Facilitador UNION SELECT senha, email, id, idCargo FROM Admins) AS Login_Senha WHERE email = ?';
 
-        const [findEmail] = await connection.execute(queryEmail, [Email])
-
+        const [findEmail] = await connection.execute(queryEmail, [email])
         if(findEmail.length == 1) {
             return res.status(401).json({msg: "Email ja cadastrado! utilize outro email", status: 13});
         }
+
         next();
     } catch (error) {
         return res.status(500).json({ status: 10});
