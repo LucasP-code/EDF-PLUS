@@ -47,7 +47,7 @@ const createCrianca = async(infCrianca, userId) => {
 const createAluno = async(infAluno) => {
 
         const {nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade} = infAluno;
-        console.log(infAluno);
+        
         const query = 'INSERT INTO Alunos(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade, idCargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 3)'
         
         const newAluno = new Aluno(nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade)

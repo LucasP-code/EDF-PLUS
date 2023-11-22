@@ -15,7 +15,7 @@ const getAll = async(req,res) => {
 const createAluno = async(req, res) => {
 
     try {
-        console.log(req.body);
+        
         const createdAluno = await models.createAluno(req.body);
         return res.status(201).json(createdAluno);
     } catch (error) {
@@ -47,7 +47,7 @@ const getAllCriancas = async (req, res) => {
         criancaData.ID_Aluno = userId;
 
         const CriancasAluno = await models.getAllCriancas(userId);
-        return res.status(201).json(CriancasAluno);
+        return res.status(200).json(CriancasAluno);
     } catch (error) {
         return res.status(500).json({ status: 5 });
     }
@@ -63,7 +63,7 @@ const getAllInfoAluno = async (req, res) => {
         const InfoAlunoList = await models.getAllInfoAluno(userId);
 
         if(!InfoAlunoList.length){
-            return res.status(500).json({ erro: "info not found"});
+            return res.status(500).json({ erro: "erro ao buscar por suas informações" });
         }
         const firstAluno = InfoAlunoList[0]
         return res.status(200).json(firstAluno);
