@@ -34,7 +34,7 @@ FOREIGN KEY (idCargo) REFERENCES Cargos(idCargos)
 INSERT INTO Alunos(idCargo, nome, nomePreferencia, cpf, celWhatsapp, email, senha, sexo, estadoCivil, modalidade)
 VALUES(3, 'Felipe Cavalcante', 'Felipe', '42828831255', 1499551234, 'felipemainyasuo@gmail.com', "senhalegal", 'M', 'solteiro', 'online');
 
-
+-- area escola
 CREATE TABLE Escola(
 id int not null auto_increment primary key,
 nomeEscola varchar(155),
@@ -48,10 +48,12 @@ cep INT,
 telefone BIGINT
 );
 
+-- inserir exemplo de escola
+
 INSERT INTO Escola(nomeEscola, diretor, endereço, numero, bairroDistrito, cidade, uf, cep, telefone)
 VALUES('EE Escola muito bacana', 'Luis Felipe Santos', 'Rua Hilario da Silva', 1128, 'Santos jurados', 'Pompeia', 'SP', 12345678, 149912345678);
 
-
+-- area modulos
 CREATE TABLE Modulos(
 id int not null auto_increment primary key,
 idModulo varchar(12),
@@ -59,15 +61,13 @@ modulo varchar(120),
 sigla varchar(8),
 sequencia INT
 );
+-- inserir exemplo de modulos
 
 INSERT INTO Modulos(idModulo, modulo, sigla, sequencia)
 VALUES ('1DBV1', 'Desenvolvendo Bebês Virtuosos 2', 'DBV2', 2);
 
 
-
-
-
-
+-- area turma
 
 CREATE TABLE Turma(
 id int not null auto_increment primary key,
@@ -80,13 +80,10 @@ foreign key (idEscola) references Escola(id),
 foreign key (idModulo) references Modulos(id)
 );
 
+-- inserir exemplo de turma
 
 INSERT INTO Turma(idEscola, idModulo, modalidade, cidade, uf)
 Values(1, 1, 'online', 'Pompeia', 'SP');
-
-
-
-
 
 
 
@@ -107,6 +104,8 @@ CREATE TABLE Criancas (
     FOREIGN KEY (idEscola) REFERENCES Escola(id),
     FOREIGN KEY (idTurma) REFERENCES Turma(id)
 );
+
+-- inserir exemplo de criança
 
 INSERT INTO Criancas(idAluno, idEscola, idTurma,nome, cpf, dataNascimento, sexo, grauParentesco, celWhatsapp) 
 VALUES (1, 1, 1,"Fatima benez", 50652838855,"2005-1-11", "F", "filho", 14991463513);
@@ -140,7 +139,7 @@ FOREIGN KEY (idCargo) REFERENCES Cargos(idCargos)
 );
 
 
--- inserir facilitador
+-- inserir exemplo de facilitador
 INSERT INTO Facilitador(idCargo ,nome, nomePreferencia, dataNascimento, 
 estadoCivil, cpf, celWhatsapp, cep, endereço, numero, 
 email, emailEdf, ocupacao, uf, cidade, nomesFilhos, idadeFilhos)
@@ -158,8 +157,11 @@ CREATE TABLE Admins (
     FOREIGN KEY (idCargo) REFERENCES Cargos(idCargos)
 );
 
+-- inserir exemplo de admin
+
 INSERT INTO Admins(idCargo, email, senha) VALUES (1, 'adminEDF123@gmail.com', 'senhadeADM');
 
+-- area facilitador por turma
 
 CREATE TABLE Facilitador_turma(
 idTurma INT,

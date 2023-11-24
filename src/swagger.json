@@ -9,13 +9,6 @@
       },
       "version": "1.0.0"
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    },
     "paths": {
       "/Login": {
         "post": {
@@ -109,17 +102,6 @@
           "description": "Mostra todas as crianças do aluno que fez login, utilizando o ID do aluno que realizou o login.",
           "summary": "Rota GET com a função de mostrar as crianças do responsável.",
           "tags": ["Aluno"],
-          "parameters": [
-            {
-              "name": "alunoId",
-              "in": "query",
-              "description": "Busca da criança pelo id do aluno",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
           "security": [
             {
               "bearerAuth": []
@@ -140,17 +122,6 @@
           "description": "Na tela do usuário, realiza um GET em que busca e mostra para o usuário suas informações de usuário.",
           "summary": "Rota GET com a função de mostrar as informações do aluno.",
           "tags": ["Aluno"],
-          "parameters": [
-            {
-              "name": "alunoId",
-              "in": "query",
-              "description": "Busca da criança pelo id do aluno",
-              "required": true,
-              "schema": {
-                "type": "integer"
-              }
-            }
-          ],
           "security": [
             {
               "bearerAuth": []
@@ -207,9 +178,7 @@
         "Crianca": {
           "type": "object",
           "properties": {
-            "idAluno": {
-              "type": "number"
-            },
+            
             "idEscola": {
               "type": "number"
             },
@@ -243,6 +212,13 @@
               "type": "string"
             }
           }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
         }
       }
     }
