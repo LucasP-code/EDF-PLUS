@@ -101,8 +101,18 @@ const getAll = async() => {
         return res.status(500).json({ status: 7 });
     }
 
-    
 }; 
+
+
+
+const getAllTurmas = async(userId) => {
+
+    const query = 'SELECT Aluno_turma.idTurma AS idTurma, Escola.nomeEscola AS nomeEscola, Modulos.modulo AS nomeModulo, Aluno_turma.descricao AS descricao FROM Aluno_turma JOIN Turma ON Aluno_turma.idTurma = Turma.id JOIN Modulos ON Turma.idModulo = Modulos.id JOIN Escola ON Turma.idEscola = Escola.id WHERE Aluno_turma.idAluno = ?;'
+
+    const [suasTurmas] = await connection.execute(query, [userId]);
+
+    return suasTurmas;
+};
 
 
 
@@ -113,5 +123,6 @@ createAluno,
 createCrianca,
 getAllCriancas,
 getAllInfoAluno,
+getAllTurmas,
 };
 

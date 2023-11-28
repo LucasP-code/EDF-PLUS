@@ -12,6 +12,7 @@ const middleware = require('../middlewares/middleware');
 
 router.get('/InfoAluno', middleware.verifyToken, middleware.AlunoRole, controller.getAllInfoAluno);
 router.get('/SuasCriancas', middleware.verifyToken, middleware.AlunoRole, controller.getAllCriancas);
+router.get('/SuasTurmas', middleware.verifyToken, middleware.AlunoRole, controller.getAllTurmas);
 router.post('/CadastrarAluno', middleware.validateEmail, middleware.validateCPF, middleware.validatePassword, controller.createAluno);
 router.post('/CadastrarCrianca',  middleware.verifyToken, middleware.AlunoRole, middleware.validateCPF, controller.createCrianca);
 

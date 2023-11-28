@@ -70,10 +70,33 @@ const getAllInfoAluno = async (req, res) => {
 };
 
 
+const getAllTurmas = async(req, res) => {
+
+    try{
+    const userId = req.user.userId; 
+    const AlunoData = req.body;
+    AlunoData.idAluno = userId;
+
+    const suasTurmas = await models.getAllTurmas(userId);
+    
+    
+    if(!suasTurmas.length){
+        return res.status(500).json({ erro: "Você não esta cadastrado em nenhuma turma!" });
+    };
+    return res.status(200).json(suasTurmas)
+} catch(error){
+    return res.status(401).json({ erro: "nenhuma informação retornada"});
+}
+};
+
+
+
+
 module.exports = {
 getAll,
 createAluno,
 createCrianca,
 getAllCriancas,
 getAllInfoAluno,
+getAllTurmas,
 };

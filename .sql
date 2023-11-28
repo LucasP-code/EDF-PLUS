@@ -105,6 +105,7 @@ CREATE TABLE Criancas (
     FOREIGN KEY (idTurma) REFERENCES Turma(id)
 );
 
+
 -- inserir exemplo de criança
 
 INSERT INTO Criancas(idAluno, idEscola, idTurma,nome, cpf, dataNascimento, sexo, grauParentesco, celWhatsapp) 
@@ -171,4 +172,18 @@ foreign key (idTurma) references Turma(id)
 
 );
 
--- SELECT Turma.*,Escola.Nome_escola FROM Turma Inner join Escola ON Turma.ID_Escola = Escola.ID;
+CREATE TABLE Aluno_turma(
+idAluno int,
+idTurma int,
+descricao varchar(70),
+foreign key (idAluno) references Alunos(id),
+foreign key (idTurma) references Turma(id)
+);
+
+INSERT INTO Aluno_turma(idAluno, idTurma, descricao) VALUES (1, 1,'descrição teste'); 
+
+SELECT Aluno_turma.idTurma AS idTurma, Escola.nomeEscola AS nomeEscola, Modulos.modulo AS nomeModulo, Aluno_turma.descricao AS descricao FROM Aluno_turma JOIN Turma ON Aluno_turma.idTurma = Turma.id JOIN Modulos ON Turma.idModulo = Modulos.id JOIN Escola ON Turma.idEscola = Escola.id WHERE Aluno_turma.idAluno = 1;
+
+
+
+-- SELECT Turma.*,Escola.nomeEscola FROM Turma Inner join Escola ON Turma.idEscola = Escola.ID;
