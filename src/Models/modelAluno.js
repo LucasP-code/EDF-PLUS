@@ -115,6 +115,14 @@ const getAllTurmas = async(userId) => {
 };
 
 
+const getAllFacilitadorTurma = async(idTurma) => {
+
+    const query = 'SELECT Facilitador_turma.idTurma, Facilitador.nome as nomeFacilitador FROM Facilitador_turma JOIN Turma ON Facilitador_turma.idTurma = Turma.id JOIN Facilitador ON Facilitador_turma.idFacilitador = Facilitador.id WHERE Facilitador_turma.idTurma = ?;'
+
+    const [facilitadoresTurma] = await connection.execute(query, [idTurma]);
+
+    return facilitadoresTurma;
+};
 
 
 module.exports = {
@@ -124,5 +132,6 @@ createCrianca,
 getAllCriancas,
 getAllInfoAluno,
 getAllTurmas,
+getAllFacilitadorTurma,
 };
 

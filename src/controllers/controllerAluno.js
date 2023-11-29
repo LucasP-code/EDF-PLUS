@@ -89,7 +89,16 @@ const getAllTurmas = async(req, res) => {
 }
 };
 
+const getAllFacilitadorTurma = async(req, res) => {
+    try{
+    const idTurma = req.params.idTurma;
+    const facilitadoresTurma = await models.getAllFacilitadorTurma(idTurma);
 
+    res.status(200).json(facilitadoresTurma);
+    } catch(error){
+        res.status(500).json({error: "Nenhum facilitador encontrado!"})
+    }
+}
 
 
 module.exports = {
@@ -99,4 +108,5 @@ createCrianca,
 getAllCriancas,
 getAllInfoAluno,
 getAllTurmas,
+getAllFacilitadorTurma,
 };
