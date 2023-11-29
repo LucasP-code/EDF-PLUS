@@ -85,7 +85,7 @@ foreign key (idModulo) references Modulos(id)
 INSERT INTO Turma(idEscola, idModulo, modalidade, cidade, uf)
 Values(1, 1, 'online', 'Pompeia', 'SP');
 
-
+select * from Turma;
 
 -- area crianças
 
@@ -139,13 +139,14 @@ idadefilhos INT,
 FOREIGN KEY (idCargo) REFERENCES Cargos(idCargos)
 );
 
+select * from Facilitador;
 
 -- inserir exemplo de facilitador
 INSERT INTO Facilitador(idCargo ,nome, nomePreferencia, dataNascimento, 
 estadoCivil, cpf, celWhatsapp, cep, endereço, numero, 
 email, emailEdf, ocupacao, uf, cidade, nomesFilhos, idadeFilhos)
-VALUES(2 ,'Paula Maria Rosse', 'Paula', '1995-01-07', 'casada', 25737818834, 14991461215, 17123345
-, 'rua dias', 1234, 'paulacavalcante123@gmail.com', 'paula.cavalcanteEDF@edf.com', 'facilitadora', 'SP', 'Pompeia', 'Felipe Cavalcante', 12);
+VALUES(2 ,'Marcos Cvalcante', 'Paula', '1995-01-07', 'casada', 25737818834, 14991461215, 17123345
+, 'rua dias', 1234, 'marcoscavalcante123@gmail.com', 'marcos.cavalcanteEDF@edf.com', 'facilitador', 'SP', 'Pompeia', 'Felipe Cavalcante', 12);
 
 
 -- area admin
@@ -162,15 +163,9 @@ CREATE TABLE Admins (
 
 INSERT INTO Admins(idCargo, email, senha) VALUES (1, 'adminEDF123@gmail.com', 'senhadeADM');
 
--- area facilitador por turma
 
-CREATE TABLE Facilitador_turma(
-idTurma INT,
-idFacilitador INT,
-foreign key (idFacilitador) references Facilitador(id),
-foreign key (idTurma) references Turma(id)
 
-);
+-- area Aluno por tuma
 
 CREATE TABLE Aluno_turma(
 idAluno int,
@@ -184,6 +179,18 @@ INSERT INTO Aluno_turma(idAluno, idTurma, descricao) VALUES (1, 1,'descrição t
 
 SELECT Aluno_turma.idTurma AS idTurma, Escola.nomeEscola AS nomeEscola, Modulos.modulo AS nomeModulo, Aluno_turma.descricao AS descricao FROM Aluno_turma JOIN Turma ON Aluno_turma.idTurma = Turma.id JOIN Modulos ON Turma.idModulo = Modulos.id JOIN Escola ON Turma.idEscola = Escola.id WHERE Aluno_turma.idAluno = 1;
 
+
+CREATE TABLE Facilitador_turma(
+idTurma int,
+idFacilitador int,
+foreign key (idFacilitador) references Facilitador(id),
+foreign key (idTurma) references Turma(id)
+);
+
+-- exemplo de facilitador na turma
+insert into Facilitador_turma(idTurma, idFacilitador) values (5,1);
+
+SELECT Facilitador_turma.idTurma, Facilitador.nome as nomeFacilitador FROM Facilitador_turma JOIN Turma ON Facilitador_turma.idTurma = Turma.id JOIN Facilitador ON Facilitador_turma.idFacilitador = Facilitador.id WHERE Facilitador_turma.idTurma = 5;
 
 
 -- SELECT Turma.*,Escola.nomeEscola FROM Turma Inner join Escola ON Turma.idEscola = Escola.ID;
