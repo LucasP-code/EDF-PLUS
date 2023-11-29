@@ -198,12 +198,12 @@ id int not null auto_increment primary key,
 idTurma INT,
 idFacilitador INT,
 idModulo INT,
-Foreign Key (idTurma) REFERENCES Turma(id),
-Foreign Key (idFacilitador) REFERENCES Facilitador(id),
-Foreign Key (idModulo) REFERENCES Modulos(id),
 data_visita DATE,
 horario TIME,
-modalidade varchar(150)
+modalidade varchar(150),
+Foreign Key (idTurma) REFERENCES Turma(id),
+Foreign Key (idFacilitador) REFERENCES Facilitador(id),
+Foreign Key (idModulo) REFERENCES Modulos(id)
 );
 
 INSERT INTO Visitas (idTurma, idFacilitador, idModulo, data_visita, horario, modalidade) VALUES (1, 1, 1,'2023-11-29' ,'15:30:00' ,'Sala no Meet');

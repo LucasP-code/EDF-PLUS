@@ -89,12 +89,23 @@ const getAllTurmas = async(req, res) => {
 }
 };
 
+
+const getAllAulasTurma = async(req, res) => {
+
+    const idTurma = req.params.idTurma;
+    const aulaTurma = await models.getAllAulasTurma(idTurma);
+
+    res.status(200).json({aulas: aulaTurma});
+};
+
+
+
 const getAllFacilitadorTurma = async(req, res) => {
     try{
     const idTurma = req.params.idTurma;
     const facilitadoresTurma = await models.getAllFacilitadorTurma(idTurma);
 
-    res.status(200).json(facilitadoresTurma);
+    res.status(200).json({facilitadores: facilitadoresTurma});
     } catch(error){
         res.status(500).json({error: "Nenhum facilitador encontrado!"})
     }
@@ -108,5 +119,6 @@ createCrianca,
 getAllCriancas,
 getAllInfoAluno,
 getAllTurmas,
+getAllAulasTurma,
 getAllFacilitadorTurma,
 };

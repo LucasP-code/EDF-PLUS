@@ -115,6 +115,16 @@ const getAllTurmas = async(userId) => {
 };
 
 
+const getAllAulasTurma = async(idTurma) => {
+
+    const query = 'SELECT Turma_visitas.idTurma, Visitas.data_visita AS Dia_da_visita, Visitas.horario AS Horario_da_visita, Visitas.modalidade AS Modalidade_da_visita FROM Turma_visitas JOIN Turma ON Turma_visitas.idTurma = Turma.id JOIN Visitas ON Turma_visitas.idVisita = Visitas.id where Turma_visitas.idTurma = ?;'
+
+    const [aulaTurma] = await connection.execute(query, [idTurma]);
+
+    return aulaTurma;
+};
+
+
 const getAllFacilitadorTurma = async(idTurma) => {
 
     const query = 'SELECT Facilitador_turma.idTurma, Facilitador.nome as nomeFacilitador FROM Facilitador_turma JOIN Turma ON Facilitador_turma.idTurma = Turma.id JOIN Facilitador ON Facilitador_turma.idFacilitador = Facilitador.id WHERE Facilitador_turma.idTurma = ?;'
@@ -132,6 +142,7 @@ createCrianca,
 getAllCriancas,
 getAllInfoAluno,
 getAllTurmas,
+getAllAulasTurma,
 getAllFacilitadorTurma,
 };
 
