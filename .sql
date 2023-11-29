@@ -192,5 +192,34 @@ insert into Facilitador_turma(idTurma, idFacilitador) values (5,1);
 
 SELECT Facilitador_turma.idTurma, Facilitador.nome as nomeFacilitador FROM Facilitador_turma JOIN Turma ON Facilitador_turma.idTurma = Turma.id JOIN Facilitador ON Facilitador_turma.idFacilitador = Facilitador.id WHERE Facilitador_turma.idTurma = 5;
 
+-- area visitas da turma
+CREATE TABLE Visitas(
+id int not null auto_increment primary key,
+idTurma INT,
+idFacilitador INT,
+idModulo INT,
+Foreign Key (idTurma) REFERENCES Turma(id),
+Foreign Key (idFacilitador) REFERENCES Facilitador(id),
+Foreign Key (idModulo) REFERENCES Modulos(id),
+data_visita DATE,
+horario TIME,
+modalidade varchar(150)
+);
+
+INSERT INTO Visitas (idTurma, idFacilitador, idModulo, data_visita, horario, modalidade) VALUES (1, 1, 1,'2023-11-29' ,'15:30:00' ,'Sala no Meet');
+
+SELECT data_visita, horario, modalidade FROM Visitas WHERE idTurma = 1;
+-- area Visitas por turma
+
+CREATE TABLE Turma_visitas(
+idVisita int,
+idTurma int,
+Foreign Key (idVisita) REFERENCES Visitas(id),
+Foreign Key (idTurma) REFERENCES Turma(id)
+);
+
+INSERT INTO Turma_visitas(idVisita, idTurma) VALUES (1,1); 
+
+select Turma_visitas.idTurma, Visitas.data_visita as Dia_da_visita, Visitas.horario as Horario_da_visita, Visitas.modalidade as Modalidade_da_visita from Turma_visitas JOIN Turma ON Turma_visitas.idTurma = Turma.id JOIN Visitas ON Turma_visitas.idVisita = Visitas.id where Turma_visitas.idTurma = 1;
 
 -- SELECT Turma.*,Escola.nomeEscola FROM Turma Inner join Escola ON Turma.idEscola = Escola.ID;
