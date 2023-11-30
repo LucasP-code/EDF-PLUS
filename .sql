@@ -177,7 +177,11 @@ foreign key (idTurma) references Turma(id)
 
 INSERT INTO Aluno_turma(idAluno, idTurma, descricao) VALUES (1, 1,'descrição teste'); 
 
+
+
 SELECT Aluno_turma.idTurma AS idTurma, Escola.nomeEscola AS nomeEscola, Modulos.modulo AS nomeModulo, Aluno_turma.descricao AS descricao FROM Aluno_turma JOIN Turma ON Aluno_turma.idTurma = Turma.id JOIN Modulos ON Turma.idModulo = Modulos.id JOIN Escola ON Turma.idEscola = Escola.id WHERE Aluno_turma.idAluno = 1;
+
+SELECT * FROM Aluno_turma WHERE Aluno_turma.idAluno = 1;
 
 
 CREATE TABLE Facilitador_turma(
@@ -186,6 +190,7 @@ idFacilitador int,
 foreign key (idFacilitador) references Facilitador(id),
 foreign key (idTurma) references Turma(id)
 );
+
 
 -- exemplo de facilitador na turma
 insert into Facilitador_turma(idTurma, idFacilitador) values (1,1);

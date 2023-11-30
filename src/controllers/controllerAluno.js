@@ -69,25 +69,24 @@ const getAllInfoAluno = async (req, res) => {
         return res.status(200).json(firstAluno);
 };
 
+const getAllTurmas = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const idTurma = req.params.idTurma; 
+        const AlunoData = req.body;
+        AlunoData.idAluno = userId;
 
-const getAllTurmas = async(req, res) => {
+        const suasTurmas = await models.getAllTurmas(userId);
 
-    try{
-    const userId = req.user.userId; 
-    const AlunoData = req.body;
-    AlunoData.idAluno = userId;
-
-    const suasTurmas = await models.getAllTurmas(userId);
-    
-    
-    if(!suasTurmas.length){
-        return res.status(500).json({ erro: "Você não esta cadastrado em nenhuma turma!" });
-    };
-    return res.status(200).json(suasTurmas)
-} catch(error){
-    return res.status(401).json({ erro: "nenhuma informação retornada"});
-}
+        return res.status(200).json(suasTurmas);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
 };
+
+
+
 
 
 const getAllAulasTurma = async(req, res) => {

@@ -108,6 +108,27 @@ const AlunoRole = (req, res, next) => {
     }
 }
 
+const verifyTurma = async (req, res, next) => {
+    try {
+        const userId = req.user.userId;
+        const idTurma = req.params.idTurma;
+
+        const query = 'SELECT * FROM Aluno_turma WHERE idAluno = ? AND idTurma = ?;';
+
+        const [turmaAluno] = await connection.execute(query, [userId, idTurma]);
+
+        if (!turmaAluno.length) {
+            return res.status(403).json({ erro: "Você não tem permissão para acessar esta turma." });
+        }
+
+        req.turmaUsuario = turmaAluno;
+
+        next();
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+};
 
 
 
@@ -119,5 +140,5 @@ verifyToken,
 validateEmail,
 AlunoRole,
 validateCPF,
-
+verifyTurma,
 };
