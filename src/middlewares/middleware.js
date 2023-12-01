@@ -108,6 +108,7 @@ const AlunoRole = (req, res, next) => {
     }
 }
 
+
 const verifyTurma = async (req, res, next) => {
     try {
         const userId = req.user.userId;
