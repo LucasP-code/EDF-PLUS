@@ -97,6 +97,26 @@
           }
         }
       },
+      "/InfoAluno": {
+        "get": {
+          "description": "Na tela do usuário, realiza um GET em que busca e mostra para o usuário suas informações de usuário.",
+          "summary": "Rota GET com a função de mostrar as informações do aluno.",
+          "tags": ["Aluno"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro ao buscar por suas informações"
+            }
+          }
+        }
+      },
       "/SuasCriancas": {
         "get": {
           "description": "Mostra todas as crianças do aluno que fez login, utilizando o ID do aluno que realizou o login.",
@@ -117,11 +137,39 @@
           }
         }
       },
-      "/InfoAluno": {
+      "/SuasTurmas": {
         "get": {
-          "description": "Na tela do usuário, realiza um GET em que busca e mostra para o usuário suas informações de usuário.",
-          "summary": "Rota GET com a função de mostrar as informações do aluno.",
+          "description": "Na tela do usuário, realiza um GET em que busca e mostra para o usuário todas as turmas em que ele faz parte.",
+          "summary": "Rota GET com a função de mostrar as turmas do aluno.",
           "tags": ["Aluno"],
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro ao buscar por suas informações"
+            }
+          }
+        }
+      },
+      "/SuasTurmas/:idTurma/SuasAulas": {
+        "get": {
+          "description": "Na tela do usuário, realiza um GET em que busca e mostra para o usuário todas as suas aulas da turma em que ele faz parte.",
+          "summary": "Rota GET com a função de mostrar as turmas do aluno.",
+          "tags": ["Aluno"],
+          "parameters": [
+            {
+              "name": "idTurma",
+              "in": "query",
+              "description": "ID da turma que sera utilizada como parametro",
+              "required": true
+            }
+          ],
           "security": [
             {
               "bearerAuth": []
